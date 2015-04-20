@@ -1,0 +1,458 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[22:25:24] 
+[22:25:24] Server Plugins
+[22:25:24] --------------
+[22:25:24]  Loading plugin: mysql
+[22:25:24]  >> plugin.mysql: R39-3 successfully loaded.
+[22:25:24]   Loaded.
+[22:25:24]  Loaded 1 plugins.
+
+[22:25:24] 
+[22:25:24] Filterscripts
+[22:25:24] ---------------
+[22:25:24]   Loading filterscript 'gl_actions.amx'...
+[22:25:24]   Loading filterscript 'gl_realtime.amx'...
+[22:25:24]   Loading filterscript 'attachments.amx'...
+[22:25:24]   Loaded 3 filterscripts.
+
+[22:25:24] 
+----------------------------------
+[22:25:24]  Survival Instinct by Pontus        
+[22:25:24] ----------------------------------
+
+[22:25:24] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:07:40] 
+[23:07:40] Server Plugins
+[23:07:40] --------------
+[23:07:40]  Loading plugin: mysql
+[23:07:40]  >> plugin.mysql: R39-3 successfully loaded.
+[23:07:40]   Loaded.
+[23:07:40]  Loaded 1 plugins.
+
+[23:07:40] 
+[23:07:40] Filterscripts
+[23:07:40] ---------------
+[23:07:40]   Loading filterscript 'gl_actions.amx'...
+[23:07:40]   Loading filterscript 'gl_realtime.amx'...
+[23:07:40]   Loading filterscript 'attachments.amx'...
+[23:07:40]   Loaded 3 filterscripts.
+
+[23:07:40] 
+----------------------------------
+[23:07:40]  Survival Instinct by Pontus        
+[23:07:40] ----------------------------------
+
+[23:07:40] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:08:05] 
+[23:08:05] Server Plugins
+[23:08:05] --------------
+[23:08:05]  Loading plugin: mysql
+[23:08:05]  >> plugin.mysql: R39-3 successfully loaded.
+[23:08:05]   Loaded.
+[23:08:05]  Loaded 1 plugins.
+
+[23:08:05] 
+[23:08:05] Filterscripts
+[23:08:05] ---------------
+[23:08:05]   Loading filterscript 'gl_actions.amx'...
+[23:08:05]   Loading filterscript 'gl_realtime.amx'...
+[23:08:05]   Loading filterscript 'attachments.amx'...
+[23:08:05]   Loaded 3 filterscripts.
+
+[23:08:05] 
+----------------------------------
+[23:08:05]  Survival Instinct by Pontus        
+[23:08:05] ----------------------------------
+
+[23:08:05] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:09:48] 
+[23:09:48] Server Plugins
+[23:09:48] --------------
+[23:09:48]  Loading plugin: mysql
+[23:09:48]  >> plugin.mysql: R39-3 successfully loaded.
+[23:09:48]   Loaded.
+[23:09:48]  Loaded 1 plugins.
+
+[23:09:48] 
+[23:09:48] Filterscripts
+[23:09:48] ---------------
+[23:09:48]   Loading filterscript 'gl_actions.amx'...
+[23:09:48]   Loading filterscript 'gl_realtime.amx'...
+[23:09:48]   Loading filterscript 'attachments.amx'...
+[23:09:48]   Loaded 3 filterscripts.
+
+[23:09:48] 
+----------------------------------
+[23:09:48]  Survival Instinct by Pontus        
+[23:09:48] ----------------------------------
+
+[23:09:48] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:10:39] 
+[23:10:39] Server Plugins
+[23:10:39] --------------
+[23:10:39]  Loading plugin: mysql
+[23:10:39]  >> plugin.mysql: R39-3 successfully loaded.
+[23:10:39]   Loaded.
+[23:10:39]  Loaded 1 plugins.
+
+[23:10:39] 
+[23:10:39] Filterscripts
+[23:10:39] ---------------
+[23:10:39]   Loading filterscript 'gl_actions.amx'...
+[23:10:39]   Loading filterscript 'gl_realtime.amx'...
+[23:10:39]   Loading filterscript 'attachments.amx'...
+[23:10:39]   Loaded 3 filterscripts.
+
+[23:10:39] 
+----------------------------------
+[23:10:39]  Survival Instinct by Pontus        
+[23:10:39] ----------------------------------
+
+[23:10:39] Number of vehicle models: 0
+[23:14:04] Incoming connection: 127.0.0.1:55692 id: 0
+[23:14:04] [join] cdog has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:16:13] 
+[23:16:13] Server Plugins
+[23:16:13] --------------
+[23:16:13]  Loading plugin: mysql
+[23:16:13]  >> plugin.mysql: R39-3 successfully loaded.
+[23:16:13]   Loaded.
+[23:16:13]  Loaded 1 plugins.
+
+[23:16:13] 
+[23:16:13] Filterscripts
+[23:16:13] ---------------
+[23:16:13]   Loading filterscript 'gl_actions.amx'...
+[23:16:13]   Loading filterscript 'gl_realtime.amx'...
+[23:16:13]   Loading filterscript 'attachments.amx'...
+[23:16:13]   Loaded 3 filterscripts.
+
+[23:16:13] 
+----------------------------------
+[23:16:13]  Survival Instinct by Pontus        
+[23:16:13] ----------------------------------
+
+[23:16:13] Number of vehicle models: 0
+[23:16:20] Incoming connection: 127.0.0.1:60852 id: 0
+[23:16:20] [join] cdog has joined the server (0:127.0.0.1)
+[23:24:04] [part] cdog has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:24:48] 
+[23:24:48] Server Plugins
+[23:24:48] --------------
+[23:24:48]  Loading plugin: mysql
+[23:24:48]  >> plugin.mysql: R39-3 successfully loaded.
+[23:24:48]   Loaded.
+[23:24:48]  Loaded 1 plugins.
+
+[23:24:48] 
+[23:24:48] Filterscripts
+[23:24:48] ---------------
+[23:24:48]   Loading filterscript 'gl_actions.amx'...
+[23:24:48]   Loading filterscript 'gl_realtime.amx'...
+[23:24:48]   Loading filterscript 'attachments.amx'...
+[23:24:48]   Loaded 3 filterscripts.
+
+[23:24:48] 
+----------------------------------
+[23:24:48]  Survival Instinct by Pontus        
+[23:24:48] ----------------------------------
+
+[23:24:48] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:25:06] 
+[23:25:06] Server Plugins
+[23:25:06] --------------
+[23:25:06]  Loading plugin: mysql
+[23:25:06]  >> plugin.mysql: R39-3 successfully loaded.
+[23:25:06]   Loaded.
+[23:25:06]  Loaded 1 plugins.
+
+[23:25:06] 
+[23:25:06] Filterscripts
+[23:25:06] ---------------
+[23:25:06]   Loading filterscript 'gl_actions.amx'...
+[23:25:06]   Loading filterscript 'gl_realtime.amx'...
+[23:25:06]   Loading filterscript 'attachments.amx'...
+[23:25:06]   Loaded 3 filterscripts.
+
+[23:25:06] 
+----------------------------------
+[23:25:06]  Survival Instinct by Pontus        
+[23:25:06] ----------------------------------
+
+[23:25:06] Number of vehicle models: 0
+[23:25:30] Incoming connection: 127.0.0.1:61030 id: 0
+[23:25:30] [join] cdog has joined the server (0:127.0.0.1)
+[23:25:54] [part] cdog has left the server (0:1)
+[23:26:18] Incoming connection: 127.0.0.1:61031 id: 0
+[23:26:18] [join] pontus has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[23:35:07] 
+[23:35:07] Server Plugins
+[23:35:07] --------------
+[23:35:07]  Loading plugin: mysql
+[23:35:07]  >> plugin.mysql: R39-3 successfully loaded.
+[23:35:07]   Loaded.
+[23:35:07]  Loaded 1 plugins.
+
+[23:35:07] 
+[23:35:07] Filterscripts
+[23:35:07] ---------------
+[23:35:07]   Loading filterscript 'gl_actions.amx'...
+[23:35:07]   Loading filterscript 'gl_realtime.amx'...
+[23:35:07]   Loading filterscript 'attachments.amx'...
+[23:35:07]   Loaded 3 filterscripts.
+
+[23:35:07] 
+----------------------------------
+[23:35:07]  Survival Instinct by Pontus        
+[23:35:07] ----------------------------------
+
+[23:35:07] Number of vehicle models: 0
+[23:35:34] Incoming connection: 127.0.0.1:56947 id: 0
+[23:35:34] [join] cdog has joined the server (0:127.0.0.1)
+[23:36:17] [part] cdog has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[00:35:13] 
+[00:35:13] Server Plugins
+[00:35:13] --------------
+[00:35:13]  Loading plugin: mysql
+[00:35:13]  >> plugin.mysql: R39-3 successfully loaded.
+[00:35:13]   Loaded.
+[00:35:13]  Loaded 1 plugins.
+
+[00:35:13] 
+[00:35:13] Filterscripts
+[00:35:13] ---------------
+[00:35:13]   Loading filterscript 'gl_actions.amx'...
+[00:35:13]   Loading filterscript 'gl_realtime.amx'...
+[00:35:13]   Loading filterscript 'attachments.amx'...
+[00:35:13]   Loaded 3 filterscripts.
+
+[00:35:13] 
+----------------------------------
+[00:35:13]  Survival Instinct by Pontus        
+[00:35:13] ----------------------------------
+
+[00:35:13] Number of vehicle models: 0
+[00:36:01] Incoming connection: 127.0.0.1:63648 id: 0
+[00:36:01] [join] cdog has joined the server (0:127.0.0.1)
+[00:36:48] [part] cdog has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[00:38:50] 
+[00:38:50] Server Plugins
+[00:38:50] --------------
+[00:38:50]  Loading plugin: mysql
+[00:38:50]  >> plugin.mysql: R39-3 successfully loaded.
+[00:38:50]   Loaded.
+[00:38:50]  Loaded 1 plugins.
+
+[00:38:50] 
+[00:38:50] Filterscripts
+[00:38:50] ---------------
+[00:38:50]   Loading filterscript 'gl_actions.amx'...
+[00:38:50]   Loading filterscript 'gl_realtime.amx'...
+[00:38:50]   Loading filterscript 'attachments.amx'...
+[00:38:50]   Loaded 3 filterscripts.
+
+[00:38:50] 
+----------------------------------
+[00:38:50]  Survival Instinct by Pontus        
+[00:38:50] ----------------------------------
+
+[00:38:50] Number of vehicle models: 0
+[00:39:14] Incoming connection: 127.0.0.1:63649 id: 0
+[00:39:14] [join] cdog has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[00:40:37] 
+[00:40:37] Server Plugins
+[00:40:37] --------------
+[00:40:37]  Loading plugin: mysql
+[00:40:37]  >> plugin.mysql: R39-3 successfully loaded.
+[00:40:37]   Loaded.
+[00:40:37]  Loaded 1 plugins.
+
+[00:40:37] 
+[00:40:37] Filterscripts
+[00:40:37] ---------------
+[00:40:37]   Loading filterscript 'gl_actions.amx'...
+[00:40:37]   Loading filterscript 'gl_realtime.amx'...
+[00:40:37]   Loading filterscript 'attachments.amx'...
+[00:40:37]   Loaded 3 filterscripts.
+
+[00:40:37] 
+----------------------------------
+[00:40:37]  Survival Instinct by Pontus        
+[00:40:37] ----------------------------------
+
+[00:40:37] Number of vehicle models: 0
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[00:40:55] 
+[00:40:55] Server Plugins
+[00:40:55] --------------
+[00:40:55]  Loading plugin: mysql
+[00:40:55]  >> plugin.mysql: R39-3 successfully loaded.
+[00:40:55]   Loaded.
+[00:40:55]  Loaded 1 plugins.
+
+[00:40:55] 
+[00:40:55] Filterscripts
+[00:40:55] ---------------
+[00:40:55]   Loading filterscript 'gl_actions.amx'...
+[00:40:55]   Loading filterscript 'gl_realtime.amx'...
+[00:40:55]   Loading filterscript 'attachments.amx'...
+[00:40:55]   Loaded 3 filterscripts.
+
+[00:40:55] 
+----------------------------------
+[00:40:55]  Survival Instinct by Pontus        
+[00:40:55] ----------------------------------
+
+[00:40:55] Number of vehicle models: 0
+[00:40:56] Incoming connection: 127.0.0.1:63650 id: 0
+[00:41:00] [join] cdog has joined the server (0:127.0.0.1)
+[00:42:39] [part] cdog has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-RC4-2, (C)2005-2015 SA-MP Team
+
+[00:43:01] 
+[00:43:01] Server Plugins
+[00:43:01] --------------
+[00:43:01]  Loading plugin: mysql
+[00:43:01]  >> plugin.mysql: R39-3 successfully loaded.
+[00:43:01]   Loaded.
+[00:43:01]  Loaded 1 plugins.
+
+[00:43:01] 
+[00:43:01] Filterscripts
+[00:43:01] ---------------
+[00:43:01]   Loading filterscript 'gl_actions.amx'...
+[00:43:01]   Loading filterscript 'gl_realtime.amx'...
+[00:43:01]   Loading filterscript 'attachments.amx'...
+[00:43:01]   Loaded 3 filterscripts.
+
+[00:43:01] 
+----------------------------------
+[00:43:01]  Survival Instinct by Pontus        
+[00:43:01] ----------------------------------
+
+[00:43:01] Number of vehicle models: 0
+[00:43:20] Incoming connection: 127.0.0.1:63651 id: 0
+[00:43:20] [join] cdog has joined the server (0:127.0.0.1)
+[00:43:57] [part] cdog has left the server (0:1)
