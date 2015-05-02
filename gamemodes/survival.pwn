@@ -9,7 +9,29 @@
 #define MYSQL_DB "survival"
 #define MYSQL_PASS ""
 
+#define RED   0xFF4444FF
+#define GREEN 0x44FF44FF
+#define WHITE 0xFFFFFFFF
+#define GRAY  0xCCCCCCFF
+#define CLEAR 0xFFFFFF00
+
 new const KILL_MULTIPLIER = 3;
+new const PLAYER_MULTIPLIER = 1;
+
+new Float:spawns[][] = {{2459.2466,-1687.6827,13.5363,274.7917},
+						{2495.4873,-1688.2413,13.6832,5.0324},
+						{2522.0808,-1678.9684,15.4970,83.9932},
+						{2066.8889,-1703.4855,14.1484,273.0428},
+						{369.8315,-2048.7153,7.8359,359.5844},
+						{408.1158,-1542.1617,32.2734,221.7613},
+						{701.9957,-1699.7651,3.4115,267.8530},
+						{1209.3223,-2037.0942,69.0078,269.2162},
+						{1589.2742,-1506.8772,37.7846,283.1582},
+                        {2252.5283,-1030.8892,56.4141,225.2408},
+                        {533.3042,-1040.1722,91.4593,256.5341},
+                        {2413.7227,-2142.1038,13.5469,0.0344},
+                        {2832.4485,-1183.5514,24.7749,270.2657},
+                        {2439.2061,-970.6992,79.8092,100.1898}};
 
 new players = 0;
 
@@ -28,20 +50,21 @@ new Text:wasted;
 // DIALOG ID'S
 new HIGHSCORE_DIALOG_ID = 1;
 
+forward giveSurvivorPoints();
 forward initTextDraws();
 forward pickNewSurvivor();
-forward turnIntoSurvivor(playerid);
-forward spawn(playerid);
-forward giveSurvivorPoints();
-forward spawnVehicle(playerid, type);
-forward ConnectMySQL();
-forward showScoreboard(playerid);
-forward setupMapIcons(playerid);
-forward storeRun(playerid);
+forward repair(playerid);
 forward resetSurvivorStats();
+forward setupMapIcons(playerid);
 forward showDeathMessage(playerid, message, color);
-forward updateTextDraws();
 forward showHighScores(playerid);
+forward showScoreboard(playerid);
+forward showSurvivorStats(playerid);
+forward spawn(playerid);
+forward spawnVehicle(playerid, type);
+forward storeRun(playerid);
+forward turnIntoSurvivor(playerid);
+forward updateTextDraws();
 
 main()
 {
@@ -57,6 +80,7 @@ public OnGameModeInit()
     initTextDraws();
 	
 	DisableInteriorEnterExits();
+	EnableStuntBonusForAll(0);
 
 	SetTimer("giveSurvivorPoints", 1000, true);
 }
@@ -65,7 +89,7 @@ public giveSurvivorPoints()
 {
 	if(players > 0)
 	{
-		survivor_pps = (players - 1) *
+		survivor_pps = (players - 1) * PLAYER_MULTIPLIER *
 	    	           (1 + survivor_kills * KILL_MULTIPLIER);
 		survivor_points += survivor_pps;
 	}
@@ -80,30 +104,38 @@ public OnPlayerConnect(playerid)
 
     format(string, sizeof(string), "%s has joined the server. (%d)",
 		   name, playerid);
-    SendClientMessageToAll(0x44FF44FF, string);
+    SendClientMessageToAll(GREEN, string);
 
     spawn(playerid);
 
+	SetTimerEx("showSurvivorStats", 1000, false, "i", playerid);
+
     return 1;
+}
+
+public showSurvivorStats(playerid)
+{
+    TextDrawShowForPlayer(playerid, survivalStats);
+	TextDrawShowForPlayer(playerid, curSurvivor);
 }
 
 public OnPlayerDisconnect(playerid, reason)
 {
 	players--;
 
+    new name[MAX_PLAYER_NAME], string[36 + MAX_PLAYER_NAME];
+   	GetPlayerName(playerid, name, sizeof(name));
+
 	if(playerid == survivor)
 	{
 	    storeRun(playerid);
-		SendClientMessageToAll(0xFF4444FF, "The survivor has left the server.");
+		format(string, sizeof(string), "The survivor (%s) has left the server.", name);
+		SendClientMessageToAll(RED, string);
  		pickNewSurvivor();
  		return 1;
 	} else {
-	    new name[MAX_PLAYER_NAME], string[24 + MAX_PLAYER_NAME];
-    	GetPlayerName(playerid, name, sizeof(name));
-
 	    format(string, sizeof(string), "%s has left the server.", name);
-    	SendClientMessageToAll(0xFF4444FF, string);
-
+    	SendClientMessageToAll(RED, string);
 		return 1;
 	}
 }
@@ -111,10 +143,22 @@ public OnPlayerDisconnect(playerid, reason)
 public spawn(playerid)
 {
 	new randomSkinID = random(299);
+	new rl = random(sizeof(spawns));
+	new Float:sx, Float:sy, Float:sz, Float:sa;
 
-    SetSpawnInfo(playerid, 0, randomSkinID,
-		             2066.8889, -1703.4855, 14.1484, 273.0428,
+	if(playerid != survivor)
+	{
+	    GetPlayerPos(survivor, sx, sy, sz);
+	    GetPlayerFacingAngle(survivor, sa);
+	    SetSpawnInfo(playerid, 0, randomSkinID, sx, sy, 400, sa,
+                     29, 200, 31, 1000, 24, 42);
+	}
+	else
+	{
+    	SetSpawnInfo(playerid, 0, randomSkinID,
+    				 spawns[rl][0], spawns[rl][1], spawns[rl][2], spawns[rl][3],
 					 29, 200, 31, 1000, 24, 42);
+	}
 	SpawnPlayer(playerid);
 
     return 1;
@@ -122,7 +166,7 @@ public spawn(playerid)
 
 public pickNewSurvivor()
 {
-	new tries = players * 10;
+	new tries = players * 1000;
 
 	for(new i = 0; i < tries; i++)
 	{
@@ -136,19 +180,20 @@ public pickNewSurvivor()
 	}
 
 	survivor = 0; // No player was found, resetting.
+	resetSurvivorStats();
 	return 1;
 }
 
 public turnIntoSurvivor(playerid)
 {
-	resetSurvivorStats();
+ 	resetSurvivorStats();
 
 	survivor = playerid;
 
     new name[MAX_PLAYER_NAME], string[30+MAX_PLAYER_NAME];
     GetPlayerName(playerid, name, sizeof(name));
     format(string, sizeof(string), "%s (%d) is the new survivor!", name, playerid);
- 	SendClientMessageToAll(0xFFFFFFFF, string);
+ 	SendClientMessageToAll(WHITE, string);
 }
 
 public resetSurvivorStats()
@@ -160,13 +205,12 @@ public resetSurvivorStats()
 
 public OnPlayerSpawn(playerid)
 {
-	TogglePlayerSpectating(playerid, false);
+ 	TogglePlayerSpectating(playerid, false);
 	setupMapIcons(playerid);
 
 	TextDrawHideForPlayer(playerid, wasted);
-    TextDrawShowForPlayer(playerid, curSurvivor);
-	TextDrawShowForPlayer(playerid, survivalStats);
-	
+
+    if(playerid != survivor) { GivePlayerWeapon(playerid, 46, 0); }
     TogglePlayerControllable(playerid, true);
 	return 1;
 }
@@ -179,17 +223,17 @@ public setupMapIcons(playerid)
 	    {
 	        if(IsPlayerConnected(p))
 			{
-		    	SetPlayerMarkerForPlayer(p, playerid, 0xE81010FF);
+		    	SetPlayerMarkerForPlayer(p, playerid, RED);
 			}
 	    }
 	    else {
 			if(p == survivor)
 			{
-			    SetPlayerMarkerForPlayer(p, playerid, 0xE81010FF);
+			    SetPlayerMarkerForPlayer(p, playerid, RED);
    			}
    			else
    			{
-   			    SetPlayerMarkerForPlayer(p, playerid, 0xFFFFFF00);
+   			    SetPlayerMarkerForPlayer(p, playerid, CLEAR);
    			}
 		}
 	}
@@ -209,22 +253,14 @@ public OnPlayerDeath(playerid, killerid, reason)
 	GetPlayerPos(playerid, x, y, z);
 	CreateExplosion(x, y, z, 12, 2.0);
 
-	storeRun(playerid);
-
-    TextDrawHideForPlayer(playerid, curSurvivor);
-	TextDrawHideForPlayer(playerid, survivalStats);
 	TextDrawShowForPlayer(playerid, wasted);
 
 	if(playerid == survivor)
 	{
-		if(killerid != INVALID_PLAYER_ID)
-		{
-			turnIntoSurvivor(killerid);
-		}
-		else
-		{
-		    pickNewSurvivor();
-		}
+	    storeRun(playerid);
+	    
+		if(killerid != INVALID_PLAYER_ID) { turnIntoSurvivor(killerid); }
+		else { pickNewSurvivor(); }
 	}
 	
 	if(killerid == survivor) survivor_kills++;
@@ -234,38 +270,36 @@ public OnPlayerDeath(playerid, killerid, reason)
 	return 1;
 }
 
+public repair(playerid)
+{
+    if(IsPlayerInAnyVehicle(playerid))
+	{
+		RepairVehicle(GetPlayerVehicleID(playerid));
+	}
+
+	return 1;
+}
+
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-	if (strcmp("/car", cmdtext, true, 10) == 0)
-	{
-		spawnVehicle(playerid, 411);
-		return 1;
+	if (!strcmp(cmdtext, "/car", true, 4)) {
+		return spawnVehicle(playerid, 411);
+	} else if (!strcmp(cmdtext, "/bike", true, 5)) {
+		return spawnVehicle(playerid, 522);
+	} else if (!strcmp(cmdtext, "/boat", true, 5)) {
+		return spawnVehicle(playerid, 454);
+	} else if (!strcmp(cmdtext, "/heli", true, 5)) {
+		return spawnVehicle(playerid, 425);
+	} else if (!strcmp(cmdtext, "/killme", true, 7)) {
+	    return SetPlayerHealth(playerid, 0);
+	} else if (!strcmp(cmdtext, "/hs", true, 3)) {
+		return showHighScores(playerid);
+	} else if (!strcmp(cmdtext, "/r", true, 2)) {
+	    return repair(playerid);
+	} else if (!strcmp(cmdtext, "/skin", true, 5)) {
+	    return SetPlayerSkin(playerid, random(299));
 	}
-	else if (strcmp("/bike", cmdtext, true, 10) == 0)
-	{
-	    spawnVehicle(playerid, 522);
-	    return 1;
-	}
-	else if (strcmp("/boat", cmdtext, true, 10) == 0)
-	{
-	    spawnVehicle(playerid, 454);
-	    return 1;
-	}
-	else if (strcmp("/heli", cmdtext, true, 10) == 0)
-	{
-	    spawnVehicle(playerid, 425);
-	    return 1;
-	}
-	else if (strcmp("/killme", cmdtext, true, 10) == 0)
-	{
-	    SetPlayerHealth(playerid, 0);
-	    return 1;
- 	}
- 	else if (strcmp("/hs", cmdtext, true, 10) == 0)
- 	{
- 	    showHighScores(playerid);
- 	    return 1;
- 	}
+	
 	return 0;
 }
 
@@ -305,13 +339,11 @@ public showHighScores(playerid)
 		mysql_query(mysql,
 		            "SELECT * FROM `records` ORDER BY `points` DESC LIMIT 10");
 	new rows = cache_num_rows();
-	
 	new iterations = min(rows, 10);
 	
 	for(new i = 0; i < iterations; i++)
 	{
 	    new rowStr[MAX_PLAYER_NAME + 20];
-	
 	    new player[MAX_PLAYER_NAME];
 		cache_get_field_content(i, "player", player);
 		new points = cache_get_field_content_int(i, "points");
@@ -332,24 +364,26 @@ public showHighScores(playerid)
 	cache_delete(records);
 	
 	ShowPlayerDialog(playerid, HIGHSCORE_DIALOG_ID, DIALOG_STYLE_TABLIST_HEADERS,
-					 "High Scores", dialogStr, "Details", "Cancel");
+					 "High Scores", dialogStr, "Close", "");
+					 
+	return 1;
 }
 
 public initTextDraws()
 {
-    curSurvivor = TextDrawCreate(320, 370, "");
+    curSurvivor = TextDrawCreate(320, 365, "");
 	TextDrawFont(curSurvivor, 2);
 	TextDrawLetterSize(curSurvivor, 0.4, 1.5);
-	TextDrawColor(curSurvivor, 0xFFFFFFFF);
+	TextDrawColor(curSurvivor, WHITE);
 	TextDrawSetOutline(curSurvivor, 1);
 	TextDrawSetProportional(curSurvivor, true);
 	TextDrawSetShadow(curSurvivor, 1);
 	TextDrawAlignment(curSurvivor, 2);
 	
-	survivalStats = TextDrawCreate(320, 390, "");
+	survivalStats = TextDrawCreate(320, 385, "");
 	TextDrawFont(survivalStats, 2);
 	TextDrawLetterSize(survivalStats, 0.4, 1.5);
-	TextDrawColor(survivalStats, 0xCCCCCCFF);
+	TextDrawColor(survivalStats, GRAY);
 	TextDrawSetOutline(survivalStats, 1);
 	TextDrawSetProportional(survivalStats, true);
 	TextDrawSetShadow(survivalStats, 1);
@@ -358,7 +392,7 @@ public initTextDraws()
 	wasted = TextDrawCreate(320, 200, "Wasted");
 	TextDrawFont(wasted, 2);
 	TextDrawLetterSize(wasted, 0.8, 1.8);
-	TextDrawColor(wasted, 0xFFFFFFFF);
+	TextDrawColor(wasted, WHITE);
 	TextDrawSetOutline(wasted, 1);
 	TextDrawSetProportional(wasted, true);
 	TextDrawSetShadow(wasted, 1);

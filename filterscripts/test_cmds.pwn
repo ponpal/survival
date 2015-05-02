@@ -47,6 +47,10 @@ Weapon\tAmount\tPrice\n\
 {FFFFFF}MP5\t90\t{FF0000}$3500\
 "
 
+new Text:txtSpriteTest[5];
+
+new test_actor_id = INVALID_ACTOR_ID;
+
 //-------------------------------------------------
 
 SpawnVehicle_InfrontOfPlayer(playerid, vehiclemodel, color1, color2)
@@ -1355,7 +1359,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
 
 	if(strcmp(cmd, "/opencardoors", true ) == 0)
 	{
-	    if(GetPlayerVehicleID(playerid) && GetPlayerVehicleID(playerid) != INVALID_VEHICLE_ID)
+        if(GetPlayerVehicleID(playerid) && GetPlayerVehicleID(playerid) != INVALID_VEHICLE_ID)
 		{
 			SetVehicleParamsCarDoors(GetPlayerVehicleID(playerid), VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON);
 	    }
@@ -1364,7 +1368,6 @@ public OnPlayerCommandText(playerid, cmdtext[])
 		{
 			SetVehicleParamsCarDoors(GetPlayerCameraTargetVehicle(playerid), VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON);
 	    }*/
-
 	    return 1;
 	}
 
@@ -1379,7 +1382,6 @@ public OnPlayerCommandText(playerid, cmdtext[])
 		{
 			SetVehicleParamsCarDoors(GetPlayerCameraTargetVehicle(playerid), VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF);
 	    }*/
-
  	    return 1;
 	}
 	
@@ -1399,6 +1401,92 @@ public OnPlayerCommandText(playerid, cmdtext[])
 			SetVehicleParamsCarWindows(GetPlayerVehicleID(playerid), VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON);
 	    }
 	    return 1;
+	}
+
+	if(strcmp(cmd, "/spritetest", true ) == 0)
+	{
+    	txtSpriteTest[0] = TextDrawCreate(100.0, 100.0, "ld_grav:timer"); // Text is txdfile:texture
+    	TextDrawFont(txtSpriteTest[0], 4); // Font ID 4 is the sprite draw font
+    	TextDrawColor(txtSpriteTest[0],0xFFFFFFFF);
+    	TextDrawTextSize(txtSpriteTest[0],100.0,100.0); // Text size is the Width:Height
+    	TextDrawShowForPlayer(playerid,txtSpriteTest[0]);
+    	
+    	txtSpriteTest[1] = TextDrawCreate(200.0, 100.0, "ld_grav:bee2"); // Text is txdfile:texture
+    	TextDrawFont(txtSpriteTest[1], 4); // Font ID 4 is the sprite draw font
+    	TextDrawColor(txtSpriteTest[1],0xFFFFFFFF);
+    	TextDrawTextSize(txtSpriteTest[1],100.0,100.0); // Text size is the Width:Height
+    	TextDrawShowForPlayer(playerid,txtSpriteTest[1]);
+    	
+    	txtSpriteTest[2] = TextDrawCreate(100.0, 200.0, "ld_slot:r_69"); // Text is txdfile:texture
+    	TextDrawFont(txtSpriteTest[2], 4); // Font ID 4 is the sprite draw font
+    	TextDrawColor(txtSpriteTest[2],0xFFFFFFFF);
+    	TextDrawTextSize(txtSpriteTest[2],100.0,100.0); // Text size is the Width:Height
+    	TextDrawShowForPlayer(playerid,txtSpriteTest[2]);
+
+		txtSpriteTest[3] = TextDrawCreate(200.0, 200.0, "ld_slot:cherry"); // Text is txdfile:texture
+    	TextDrawFont(txtSpriteTest[3], 4); // Font ID 4 is the sprite draw font
+    	TextDrawColor(txtSpriteTest[3],0xFFFFFFFF);
+    	TextDrawTextSize(txtSpriteTest[3],100.0,100.0); // Text size is the Width:Height
+    	TextDrawShowForPlayer(playerid,txtSpriteTest[3]);
+    	
+    	txtSpriteTest[4] = TextDrawCreate(100.0, 300.0, "ld_card:cd9d"); // Text is txdfile:texture
+    	TextDrawFont(txtSpriteTest[4], 4); // Font ID 4 is the sprite draw font
+    	TextDrawColor(txtSpriteTest[4],0xFFFFFFFF);
+    	TextDrawTextSize(txtSpriteTest[4],100.0,100.0); // Text size is the Width:Height
+    	TextDrawShowForPlayer(playerid,txtSpriteTest[4]);
+    	
+    	return 1;
+	}
+	
+	if(strcmp(cmd, "/delspritetest", true ) == 0)
+	{
+		TextDrawDestroy(txtSpriteTest[0]);
+		TextDrawDestroy(txtSpriteTest[1]);
+		TextDrawDestroy(txtSpriteTest[2]);
+		TextDrawDestroy(txtSpriteTest[3]);
+		TextDrawDestroy(txtSpriteTest[4]);
+		return 1;
+	}
+
+	if(strcmp(cmd, "/removeallbuilding", true ) == 0)
+	{
+		RemoveBuildingForPlayer(playerid, -1, 0.0, 0.0, 0.0, 6000.0);
+		return 1;
+	}
+
+	if(strcmp(cmd, "/actoratme", true ) == 0)
+	{
+	  	new Float:X, Float:Y, Float:Z, Float:fang;
+	    GetPlayerPos(playerid, X, Y, Z);
+	    GetPlayerFacingAngle(playerid, fang);
+		test_actor_id = CreateActor(305, X+1.0, Y+1.0, Z+0.5, fang);
+		//SetActorInvulnerable(test_actor_id);
+		SetActorVirtualWorld(test_actor_id, GetPlayerVirtualWorld(playerid));
+		return 1;
+	}
+
+	if(strcmp(cmd, "/actorground", true) == 0) {
+	    ApplyActorAnimation(test_actor_id, "BEACH", "ParkSit_M_loop", 4.0, 1, 0, 0, 0, 0);
+		return 1;
+	}
+
+	if(strcmp(cmd, "/actorclear", true) == 0) {
+	    ClearActorAnimations(test_actor_id);
+		return 1;
+	}
+
+	if(strcmp(cmd, "/actorface", true) == 0) {
+	    new Float:fang;
+	    GetPlayerFacingAngle(playerid, fang);
+	    SetActorFacingAngle(test_actor_id, fang);
+		return 1;
+	}
+
+	if(strcmp(cmd, "/actorpos", true) == 0) {
+	   	new Float:X, Float:Y, Float:Z;
+	    GetPlayerPos(playerid, X, Y, Z);
+	    SetActorPos(test_actor_id, X+1.0, Y+1.0, Z);
+		return 1;
 	}
 
   	return 0;
@@ -1701,12 +1789,12 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 	fwrite(file, message);
 	fclose(file);
 	
-	new LastVectors[128+1];
-	new Float:OriginX, Float:OriginY, Float:OriginZ;
-	new Float:HitX, Float:HitY, Float:HitZ;
-	GetPlayerLastShotVectors(playerid, OriginX, OriginY, OriginZ, HitX, HitY, HitZ);
-	format(LastVectors, 128, "Last Vectors: [%.2f, %.2f, %.2f] [%.2f, %.2f, %.2f]", OriginX, OriginY, OriginZ, HitX, HitY, HitZ);
-	SendClientMessage(playerid, 0xFFFFFFFF, LastVectors);
+	//new LastVectors[128+1];
+	//new Float:OriginX, Float:OriginY, Float:OriginZ;
+	//new Float:HitX, Float:HitY, Float:HitZ;
+	//GetPlayerLastShotVectors(playerid, OriginX, OriginY, OriginZ, HitX, HitY, HitZ);
+	//format(LastVectors, 128, "Last Vectors: [%.2f, %.2f, %.2f] [%.2f, %.2f, %.2f]", OriginX, OriginY, OriginZ, HitX, HitY, HitZ);
+	//SendClientMessage(playerid, 0xFFFFFFFF, LastVectors);
 	
 	SendClientMessage(playerid, 0xFFFFFFFF, message);
  	return 1;
@@ -1777,6 +1865,28 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 	fclose(file);
 	SendClientMessageToAll(0xFFFFFFFF, message);
 }*/
+
+
+//-------------------------------------------
+/*
+public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid, bodypart)
+{
+    new message[256+1];
+    new weapname[64+1];
+    
+    GetWeaponName(weaponid, weapname, 64);
+    format(message, 256, "PlayerGiveDamageActor(%d) to Actor(%d) (%f) weapon: (%s) bodypart: %d\r\n", playerid, damaged_actorid, amount, weapname, bodypart);
+    SendClientMessageToAll(0xFFFFFFFF, message);
+    
+	if(IsValidActor(damaged_actorid)) {
+	    new Float:fActorHealth;
+	    GetActorHealth(damaged_actorid, fActorHealth);
+	    fActorHealth -= amount;
+		if(fActorHealth < 0.0) fActorHealth = 0.0;
+		SetActorHealth(damaged_actorid, fActorHealth);
+	}
+}
+*/
 //-------------------------------------------
 
 /*

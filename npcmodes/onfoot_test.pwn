@@ -11,7 +11,7 @@ main(){}
 
 NextPlayback()
 {
-   //StartRecordingPlayback(PLAYER_RECORDING_TYPE_ONFOOT,"deagletest2");
+   StartRecordingPlayback(PLAYER_RECORDING_TYPE_ONFOOT,"shotrun");
 }
 
 //------------------------------------------
