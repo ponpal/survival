@@ -15,19 +15,39 @@
 #define GRAY  0xCCCCCCFF
 #define CLEAR 0xFFFFFF00
 
-new const KILL_MULTIPLIER = 10;
-new const PLAYER_MULTIPLIER = 5;
+new const KILL_MULTIPLIER = 5;
+new const PLAYER_MULTIPLIER = 1;
 new const PLAYER_START_MONEY = 0; // TODO: Raise once money can be earned and spent.
-
-new const PLAYER_RESPAWN_TIME = 3000;
+new const PLAYER_RESPAWN_TIME = 10000;
 
 new Float:spawns[][] = {{2054.5679,-1804.4639,14.8501,269.5925},
 						{-1713.6855,1199.7866,25.1272,179.3454},
-						{2160.5466,2030.8363,10.8203,136.7463}};
+						{2160.5466,2030.8363,10.8203,136.7463},
+						{869.1324,-34.1062,63.1953,66.1591}};
+						
+new radioStations[][] = {"http://somafm.com/u80s.pls",
+						 "http://somafm.com/sf1033.pls",
+						 "http://somafm.com/suburbsofgoa.pls",
+						 "http://somafm.com/thetrip.pls",
+                         "http://sverigesradio.se/topsy/direkt/132-hi-mp3.pls",
+                         "http://sverigesradio.se/topsy/direkt/2562-hi-mp3.pls",
+						 "http://sverigesradio.se/topsy/direkt/164-hi-mp3.pls",
+						 "http://sverigesradio.se/topsy/direkt/179-hi-mp3.pls",
+						 "http://stream-uk1.radioparadise.com/mp3-192",
+						 "http://www.bassdrive.com/v2/streams/BassDrive.pls",
+						 "http://www.181.fm/winamp.pls?station=181-power&file=181-power.pls",
+						 "http://www.181.fm/winamp.pls?station=181-goodtime&file=181-goodtime.pls",
+						 "http://www.181.fm/winamp.pls?station=181-90salt&file=181-90salt.pls",
+						 "http://www.181.fm/winamp.pls?station=181-star90s&file=181-star90s.pls",
+						 "http://www.guldkanalen.se/static/streamDBK/128MP3.pls",
+						 "http://armitunes.com:8000/listen.pls"};
 
 new vehicles[] = {462, // Vespa
-				  404, // Skruttkombi
-				  447}; // Helikopter
+				  404, // Station wagon
+				  412, // Lowrider
+				  447, // Helicopter
+		  		  444, // Monster truck
+				  432}; // Tank
 				  
 //List of players logged in to the server.
 new loggedInPlayers[20] = {-1, ...}; 
@@ -70,6 +90,7 @@ public OnGameModeInit()
 	mysql = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_DB, MYSQL_PASS);
     initTextDraws();
 	
+	UsePlayerPedAnims();
 	DisableInteriorEnterExits();
 	EnableStuntBonusForAll(0);
 
@@ -79,25 +100,25 @@ public OnGameModeInit()
 public OnPlayerConnect(playerid)
 {
 	showLoginScreen(playerid);
-
+    
  	new name[MAX_PLAYER_NAME];
     GetPlayerName(playerid, name, sizeof(name));
 
 	if(userExists(name))
 	{
-    	ShowPlayerDialog(playerid, LOGIN_DIALOG, DIALOG_STYLE_INPUT,
+    	ShowPlayerDialog(playerid, LOGIN_DIALOG, DIALOG_STYLE_PASSWORD,
 			"Log in",
 			"Enter the password associated with this account.",
 			"Submit", "");
 	}
 	else
 	{
-	    ShowPlayerDialog(playerid, REGISTRATION_DIALOG, DIALOG_STYLE_INPUT,
+	    ShowPlayerDialog(playerid, REGISTRATION_DIALOG, DIALOG_STYLE_PASSWORD,
  			"Register",
 			"To store your information (score, money etc.) an account is needed.\nPlease enter a password for your new account.",
 			"Submit", "");
 	}
-
+	
     return 1;
 }
 
@@ -165,6 +186,15 @@ public OnPlayerDeath(playerid, killerid, reason)
 	if(killerid == survivor) survivor_kills++;
 
 	TogglePlayerSpectating(playerid, true);
+	if(IsPlayerInAnyVehicle(killerid))
+	{
+		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(killerid));
+	}
+	else
+	{
+        PlayerSpectatePlayer(playerid, killerid);
+	}
+
 	SetTimerEx("spawn", PLAYER_RESPAWN_TIME, false, "ib", playerid, false);
 	return 1;
 }
@@ -172,15 +202,21 @@ public OnPlayerDeath(playerid, killerid, reason)
 public OnPlayerCommandText(playerid, cmdtext[])
 {
 	if (!strcmp(cmdtext, "/v", true, 2)) {
-	    return spawnVehicle(playerid, vehicles[min(sizeof(vehicles) - 1, survivor_points / 1000)]);
+	    return spawnVehicle(playerid,
+							vehicles[min(sizeof(vehicles) - 1, survivor_kills)]);
 	} else if (!strcmp(cmdtext, "/killme", true, 7)) {
 	    return SetPlayerHealth(playerid, 0);
 	} else if (!strcmp(cmdtext, "/hs", true, 3)) {
+	    PlayerPlaySound(playerid, 15846, 0, 0, 0);
 		return showHighScores(playerid);
 	} else if (!strcmp(cmdtext, "/r", true, 2)) {
 	    return repair(playerid);
 	} else if (!strcmp(cmdtext, "/skin", true, 5)) {
 	    return SetPlayerSkin(playerid, random(311));
+	} else if (!strcmp(cmdtext, "/station", true, 8)) {
+		return playRandomRadioStation(playerid);
+	} else if (!strcmp(cmdtext, "/stop", true, 4)) {
+	    return StopAudioStreamForPlayer(playerid);
 	}
 
 	return 0;
@@ -204,7 +240,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				else
 				{
-                    ShowPlayerDialog(playerid, REGISTRATION_DIALOG, DIALOG_STYLE_INPUT,
+                    ShowPlayerDialog(playerid, REGISTRATION_DIALOG, DIALOG_STYLE_PASSWORD,
 		 				 "Register",
 						 "Your password needs to be at least 4 characters long.",
 						 "Submit", "");
@@ -218,7 +254,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				else
 				{
-				    ShowPlayerDialog(playerid, LOGIN_DIALOG, DIALOG_STYLE_INPUT,
+				    ShowPlayerDialog(playerid, LOGIN_DIALOG, DIALOG_STYLE_PASSWORD,
 		 				 "Log in",
 						 "Incorrect password. Enter the password associated with this account.",
 						 "Submit", "");
@@ -232,7 +268,7 @@ public giveSurvivorPoints()
 {
 	new players = countLoggedInPlayers();
 
-	if(players > 0)
+	if(players >= 2)
 	{
 		survivor_pps = (players - 1) * PLAYER_MULTIPLIER + (survivor_kills * KILL_MULTIPLIER);
 		survivor_points += survivor_pps;
@@ -249,7 +285,7 @@ public showSurvivorStats(playerid)
 public spawn(playerid, newPlayer)
 {
 	new Float:sx, Float:sy, Float:sz, Float:sa;
-	new playerSkinID = (newPlayer) ? random(311) : retrievePlayerInt(playerid, "skin");
+	new playerSkinID = newPlayer ? random(311) : retrievePlayerInt(playerid, "skin");
 
 	if(playerid != survivor)
 	{
@@ -267,6 +303,13 @@ public spawn(playerid, newPlayer)
 	}
 	SpawnPlayer(playerid);
     return 1;
+}
+
+playRandomRadioStation(playerid)
+{
+	StopAudioStreamForPlayer(playerid);
+	PlayAudioStreamForPlayer(playerid, radioStations[random(sizeof(radioStations))]);
+	return 1;
 }
 
 retrievePlayerInt(playerid, field[])
@@ -415,6 +458,8 @@ getUserPassword(name[], dbPassword[64])
 
 enterGame(playerid, newPlayer)
 {
+    playRandomRadioStation(playerid);
+
 	if(newPlayer)
 	{
 	    GivePlayerMoney(playerid, PLAYER_START_MONEY);
@@ -432,7 +477,7 @@ enterGame(playerid, newPlayer)
     
     spawn(playerid, newPlayer);
 
-	SetTimerEx("showSurvivorStats", 1000, false, "i", playerid);
+	SetTimerEx("showSurvivorStats", 500, false, "i", playerid);
     loggedInPlayers[findEmptySlot(loggedInPlayers)] = playerid;
     
     return 1;
@@ -586,7 +631,7 @@ showHighScores(playerid)
 
 initTextDraws()
 {
-    curSurvivor = TextDrawCreate(320, 365, "");
+    curSurvivor = TextDrawCreate(320, 360, "");
 	TextDrawFont(curSurvivor, 2);
 	TextDrawLetterSize(curSurvivor, 0.4, 1.5);
 	TextDrawColor(curSurvivor, WHITE);
@@ -595,7 +640,7 @@ initTextDraws()
 	TextDrawSetShadow(curSurvivor, 1);
 	TextDrawAlignment(curSurvivor, 2);
 	
-	survivalStats = TextDrawCreate(320, 385, "");
+	survivalStats = TextDrawCreate(320, 380, "");
 	TextDrawFont(survivalStats, 2);
 	TextDrawLetterSize(survivalStats, 0.4, 1.5);
 	TextDrawColor(survivalStats, GRAY);
@@ -604,7 +649,7 @@ initTextDraws()
 	TextDrawSetShadow(survivalStats, 1);
 	TextDrawAlignment(survivalStats, 2);
 	
-	ranking = TextDrawCreate(320, 405, "");
+	ranking = TextDrawCreate(320, 400, "");
 	TextDrawFont(ranking, 2);
 	TextDrawLetterSize(ranking, 0.4, 1.5);
 	TextDrawColor(ranking, GRAY);
@@ -613,7 +658,7 @@ initTextDraws()
 	TextDrawSetShadow(ranking, 1);
 	TextDrawAlignment(ranking, 2);
 	
-	wasted = TextDrawCreate(320, 200, "Wasted");
+	wasted = TextDrawCreate(320, 60, "Wasted");
 	TextDrawFont(wasted, 2);
 	TextDrawLetterSize(wasted, 0.8, 1.8);
 	TextDrawColor(wasted, WHITE);
